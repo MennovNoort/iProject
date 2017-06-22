@@ -15,10 +15,13 @@ if ($username && $password) {
         while($row = $resultsusername->fetch_assoc()){
             $dbusername = $row['username'];
             $dbpassword = $row['password'];
+            $dbuser = $row['id'];
         }
         if ($username == $dbusername && ($password) == $dbpassword)
         {
+            
             $_SESSION['username']=$dbusername;
+            $_SESSION['userid']=$dbuser;
             header ("location: ../index.php");
         }
         else 

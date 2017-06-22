@@ -1,15 +1,16 @@
-<form method="POST" action="post_tip.php">
-    <p>Match:</p>
-    <select>
-        <option value="eredivisie">Eredivisie</option>
-        <option value="premier">Premier League</option>
-        <option value="ligue">Ligue 1</option>
-        <option value="bundes">Bundesliga</option>
-        <option value="primera">Primera Division</option>
-        <option value="calcio">Calcio A</option>
+
+<form method="POST" action="choose_game.php">
+    <p>Choose Ligue:</p>
+    <select name="league">
+        <option value="Eredivisie">Eredivisie</option>
+        <option value="Premier League">Premier League</option>
+        <option value="Ligue 1">Ligue 1</option>
+        <option value="Bundesliga">Bundesliga</option>
+        <option value="Primera Division">Primera Division</option>
+        <option value="Calcio A">Calcio A</option>
     </select><br>
-    <p>Prediction:</p>
-    <textarea name="prediction"></textarea>
+    <input type="submit">
+    
     
     
 </form>

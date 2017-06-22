@@ -9,7 +9,11 @@
 
 <body>
     <?php 
+    include 'includes/db.php';
+    include 'includes/config.php';
+    
     session_start();
+    
     if ($_SESSION){
         if ($_SESSION['username']){
         echo "Welcome ".$_SESSION['username']."<br>";
@@ -28,8 +32,19 @@
         <a href="register_form.php">No account?</a>
     </form>
     <?php
+          
     }
-    
+     $select_bet = "SELECT * FROM bets";
+        $do_select = $connect->query($select_bet);    
+            
+        while($row = $do_select->fetch_assoc()){
+            echo 
+                $row['league']."<br>".
+                $row['teams']."<br>".
+                $row['prediction']."<br>".
+                $row['date']."<br>";
+                echo "<a href='bet.php?bet=".$row['id']."'>More info</a>";
+            }
     ?>
     
 </body>
