@@ -50,26 +50,40 @@ $do_bet = $connect->query($one_bet);
                  
                  
              }
-              $select_onr = "SELECT * FROM users_liked WHERE user_id='$userid' AND bet_id='$id'";
-                 
-             //echo $number;
-                 $do_select = $connect->query($select_onr);
-                 while($row3 = $do_select->fetch_assoc()){
-                     
-                     if (mysqli_num_rows($do_select) != 1){
-                        echo "<br><button>like</button><br><button>dislike</button>";
-                     }else {
-                         if ($row3['status'] == 1){
-                             echo "<br><button>unlike</button><br><button>dislike</button>";
-                             var_dump ($do_select);
-                         }
-                         else if ($row3['status'] == -1){
-                              echo "<br><button>like</button><br><button>undislike</button>";
-                         }
-                     }
-                 }
+             echo $number; 
+             $select_onr = "SELECT * FROM users_liked WHERE user_id='$userid' AND bet_id='$id'";
+              $do_select = $connect->query($select_onr);
+              $likes_of_user = $do_select->num_rows;  
              
-            //}
+             if($likes_of_user==0)
+             {
+                echo '
+                <br>
+                <a href="like_system.php?like=like0&bet='. $id.'">
+                <button>like</button></a><br>
+                <a href="like_system.php?like=dislike0&bet=' .$id.'"><button>dislike</button></a>';
+
+             }
+             else
+             {
+                 $row3 = $do_select->fetch_assoc();
+                 if ($row3['status'] == 1){
+                    echo '
+                    <br>
+                    <a href="like_system.php?like=unlike&bet='.$id.'"><button>unlike</button></a>
+                    <br><a href="like_system.php?like=dislike&bet='.$id.'"><button>dislike</button></a>';
+                 }
+                 else if ($row3['status'] == -1){
+                    echo '
+                    <br>
+                    <a href="like_system.php?like=like&bet='.$id.'">
+                    <button>like</button></a><br>
+                    <a href="like_system.php?like=undislike&bet='.$id.'"><button>undislike</button></a>';
+                 }
+                
+                 
+             
+            }
              
              
              
