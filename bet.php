@@ -1,38 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>iProject</title>
+	<link rel="stylesheet" href="style.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<style>
+		  
+		#fullBet {
+			display: block;
+			margin: 0 auto;
+			background-color: #ffffff;
+			padding: 20px;
+			width: 60%;
+			margin-top: 60px;
+			
+		}
+		
+		#likes {
+			width: 175px;
+			margin-top: 10px;
+			display: flex;
+			justify-content: space-between;
+		}
+		
+		#likes button {
+			width: 75px;
+			height: 50px;
+			display: inline-block;
+			border-radius: 15px;
+			border: 2px solid transparent;
+		}
+		
+	</style>
+</head>
 <?php 
-include 'includes/config.php';
-include 'includes/db.php';
-session_start();
+include 'header.php';
 
-if ($_SESSION){
-        if ($_SESSION['username']){
-        echo "Welcome ".$_SESSION['username']."<br>";
-        echo "<a href='tip_form.php'><button>Make a tip</button></a>
-        <br>
-        <a href='scripts/logout.php'>logout</a> <br> ";
-        }
-    }
-    
-    else{
-        ?>
-        <form action="scripts/login.php" method="POST">
-        <input type="username" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <input value="login" type="submit"><br>
-        <a href="register_form.php">No account?</a>
-    </form>
-<?php
-    }
 $id = $_GET['bet'];
-
 $one_bet = "SELECT * FROM bets WHERE id ='$id'";
 $do_bet = $connect->query($one_bet);
  while($row = $do_bet->fetch_assoc()){
-     echo $row['league']."<br>".
-        $row['teams']."<br>".
-        $row['prediction']."<br>".
-        $row['description']."<br>".
-        $row['username']."<br>".
-        $row['date']."<br>";
+     echo "<div id='fullBet'><br><b>Username: </b>".
+        $row['username']."<br><b>Date: </b>".
+		$row['date']."<br><br><b>League: </b>".
+		$row['league']."<br><b>Game: </b>".
+        $row['teams']."<br><b>Prediction: </b>".
+        $row['prediction']."<br><b>Motivation: </b>".
+        $row['description']."<br>";
      
      if ($_SESSION){
          if ($_SESSION['username']){
@@ -50,7 +67,7 @@ $do_bet = $connect->query($one_bet);
                  
                  
              }
-             echo $number; 
+             echo "<b>Likes: </b>".$number; 
              $select_onr = "SELECT * FROM users_liked WHERE user_id='$userid' AND bet_id='$id'";
               $do_select = $connect->query($select_onr);
               $likes_of_user = $do_select->num_rows;  
@@ -58,46 +75,32 @@ $do_bet = $connect->query($one_bet);
              if($likes_of_user==0)
              {
                 echo '
-                <br>
+                <br><div id="likes">
                 <a href="like_system.php?like=like0&bet='. $id.'">
-                <button>like</button></a><br>
-                <a href="like_system.php?like=dislike0&bet=' .$id.'"><button>dislike</button></a>';
-
+                <button>LIKE</button><br>
+                <a href="like_system.php?like=dislike0&bet=' .$id.'"><button>DISLIKE</button></a></div>';
              }
              else
              {
                  $row3 = $do_select->fetch_assoc();
                  if ($row3['status'] == 1){
                     echo '
-                    <br>
-                    <a href="like_system.php?like=unlike&bet='.$id.'"><button>unlike</button></a>
-                    <br><a href="like_system.php?like=dislike&bet='.$id.'"><button>dislike</button></a>';
+                    <br><div id="likes">
+                    <a href="like_system.php?like=unlike&bet='.$id.'"><button style="background-color: green;">UNLIKE</button></a>
+                    <br><a href="like_system.php?like=dislike&bet='.$id.'"><button>DISLIKE</button></a></div>';
                  }
                  else if ($row3['status'] == -1){
                     echo '
-                    <br>
+                    <br><div id="likes">
                     <a href="like_system.php?like=like&bet='.$id.'">
-                    <button>like</button></a><br>
-                    <a href="like_system.php?like=undislike&bet='.$id.'"><button>undislike</button></a>';
+                    <button>LIKE</button></a><br>
+                    <a href="like_system.php?like=undislike&bet='.$id.'"><button style="background-color: red;">UNDISLIKE</button></a></div>';
                  }
                 
                  
              
             }
-             
-             
-             
-             
-             
-             /*echo 
-            "<a href='scripts/like_bet.php?id=".$id."&like=like'><button>Like</button></a>
-             <a href='scripts/like_bet.php?id=".$id."&like=dislike'><button>Dislike</button></a>";*/
-             /*echo "
-             <form action='#' method='POST'>
-                <p>React to this post</p>
-                <textarea></textarea><br><br>
-                <input type='submit' value='React'>
-             </form>";*/
+    
          }
      }
  }

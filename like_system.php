@@ -2,7 +2,6 @@
 session_start();
 include 'includes/db.php';
 include 'includes/config.php';
-
 $userid = $_SESSION['userid'];
 $id = $_GET['bet'];
 $like = isset($_GET['like'])?$_GET['like']:'';
@@ -45,5 +44,4 @@ switch ($like){
     header("location: bet.php?bet=$id");
     break;  
 }
-
 ?>
