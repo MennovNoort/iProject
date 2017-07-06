@@ -55,6 +55,8 @@ $do_bet = $connect->query($one_bet);
          if ($_SESSION['username']){
              $userid = $_SESSION['userid'];
              
+           
+             
              //select all -> users_liked {
              $select_all = "SELECT * FROM users_liked WHERE bet_id='$id'";
              $do_all = $connect->query($select_all);
@@ -62,11 +64,9 @@ $do_bet = $connect->query($one_bet);
              while($row2 = $do_all->fetch_assoc()){
              //$select_onr
                  $number = $number + $row2['status'];
-                 
-                
-                 
-                 
+
              }
+            
              echo "<b>Likes: </b>".$number; 
              $select_onr = "SELECT * FROM users_liked WHERE user_id='$userid' AND bet_id='$id'";
               $do_select = $connect->query($select_onr);
